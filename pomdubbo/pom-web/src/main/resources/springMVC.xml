@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="PomWeb"></dubbo:application>
+    <!--注册中心zookeeper的IP地址，端口号，要同服务的Provider注册同一个zookeeper-->
+    <dubbo:registry protocol="zookeeper" address="127.0.0.1:2181"> </dubbo:registry>
+    <!--消费者端申请的服务的接口和id（Controller中引用的bean的名字），要和服务器端提供的bean对应起来-->
+    <dubbo:reference interface="com.curtis.inter.UserServiceInterface" id="userService" check="false"></dubbo:reference>
+
+    <context:component-scan base-package="com.curtis.controller" />
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+</beans>
